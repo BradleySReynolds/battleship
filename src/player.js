@@ -13,9 +13,15 @@ export default class Player {
     ];
 
     this.hits = 0;
+    this.iterator = 0;
+    this.invert = "horizontal";
+    this.instruct = document.querySelector(".player-instruct");
+    this.playerSquares = null;
+    this.showComputerBoard = document.querySelector(".computer-container");
+    this.invertBtn = document.querySelector(".invert");
   }
 
-  boardLogic(invert, x, y, iterator, value) {
+  boardLogic(x, y, value, invert = this.invert, iterator = this.iterator) {
     if (iterator === 5) {
       return 0;
     }
@@ -55,80 +61,67 @@ export default class Player {
     this.hits++;
   }
 
+  findXandY(target) {
+    let x = Number(target.getAttribute("x"));
+    let y = Number(target.getAttribute("y"));
+
+    return [x, y];
+  }
+
+  iteratorLogic(iterator = this.iterator) {
+    if (iterator >= 5) {
+      this.playerSquares.forEach((square) => {
+        square.style.pointerEvents = "none";
+      });
+
+      this.showComputerBoard.style.display = "flex";
+      this.instruct.remove();
+      this.invertBtn.remove();
+    }
+    if (iterator < 5) {
+      this.instruct.textContent = `Place your ${this.ships[iterator].name}`;
+    }
+  }
+
   placeShips() {
-    let iterator = 0;
-    let invert = "horizontal";
-    const playerSquares = document.querySelectorAll(".player-square");
-    const invertBtn = document.querySelector(".invert");
-
-    invertBtn.addEventListener("click", () => {
-      invert = invert === "horizontal" ? "vertical" : "horizontal";
-      invertBtn.textContent = `${invert}`;
-    });
-
-    playerSquares.forEach((ele) => {
-      ele.addEventListener("mouseenter", (e) => {
-        let target = e.target;
-        let x = Number(target.getAttribute("x"));
-        let y = Number(target.getAttribute("y"));
-
-        this.boardLogic(invert, x, y, iterator, "hovered");
-
-        e.stopImmediatePropagation();
-        this.renderBoard(playerSquares);
-      });
-    });
-
-    playerSquares.forEach((ele) => {
-      ele.addEventListener("mouseleave", (e) => {
-        let target = e.target;
-        let x = Number(target.getAttribute("x"));
-        let y = Number(target.getAttribute("y"));
-
-        this.boardLogic(invert, x, y, iterator, "exit");
-
-        e.stopImmediatePropagation();
-        this.renderBoard(playerSquares);
-      });
-    });
-
-    const handleClick = (e) => {
-      const playerInstruct = document.querySelector(".player-instruct");
+    const handleMouseEnter = (e) => {
       let target = e.target;
-      let x = Number(target.getAttribute("x"));
-      let y = Number(target.getAttribute("y"));
-
-      this.boardLogic(invert, x, y, iterator, "placed");
-      e.stopImmediatePropagation();
-      this.renderBoard(playerSquares);
-
-      playerSquares.forEach((ele) => {
-        ele.addEventListener("click", handleClick);
-      });
-
-      iterator++;
-
-      if (iterator >= 5) {
-        const showComputerBoard = document.querySelector(".computer-container");
-        playerSquares.forEach((ele) => {
-          ele.style.pointerEvents = "none";
-        });
-
-        showComputerBoard.style.display = "flex";
-        playerInstruct.remove();
-        invertBtn.remove();
-      }
-      if (iterator < 5) {
-        playerInstruct.textContent = `Place your ${this.ships[iterator].name}`;
-      }
+      let [x, y] = this.findXandY(target);
+      this.boardLogic(x, y, "hovered");
+      this.renderBoard();
     };
 
-    playerSquares.forEach((ele) => {
-      ele.addEventListener("click", handleClick);
+    const handleMounseLeave = (e) => {
+      let target = e.target;
+      let [x, y] = this.findXandY(target);
+      this.boardLogic(x, y, "exit");
+      this.renderBoard();
+    };
+
+    const handleClick = (e) => {
+      let target = e.target;
+      let [x, y] = this.findXandY(target);
+      this.boardLogic(x, y, "placed");
+      this.renderBoard();
+
+      this.iterator++;
+
+      this.iteratorLogic();
+    };
+
+    this.playerSquares.forEach((square) => {
+      square.addEventListener("mouseenter", handleMouseEnter);
+      square.addEventListener("mouseleave", handleMounseLeave);
+      square.addEventListener("click", handleClick);
+    });
+
+    this.invertBtn.addEventListener("click", () => {
+      this.invert = this.invert === "horizontal" ? "vertical" : "horizontal";
+      this.invertBtn.textContent = `${this.invert}`;
     });
   }
 
-  renderBoard(playerBoard) {
+  renderBoard(playerBoard = this.playerSquares) {
     const boardValueClassMap = {
       hovered: "ship-hit",
       placed: "ship-placed",

@@ -21,6 +21,8 @@ export default function renderDom() {
     })
   );
 
+  player.playerSquares = document.querySelectorAll(".player-square");
+
   player.placeShips();
 
   computer.positionShips();
