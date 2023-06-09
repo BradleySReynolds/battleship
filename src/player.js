@@ -26,32 +26,20 @@ export default class Player {
       return 0;
     }
 
+    let condition;
+
     if (invert === "horizontal") {
-      if (y + this.ships[iterator].length > 9) {
-        for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x][y - i] !== "placed") {
-            this.board[x][y - i] = value;
-          }
-        }
-      } else {
-        for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x][y + i] !== "placed") {
-            this.board[x][y + i] = value;
-          }
+      condition = y + this.ships[iterator].length > 9 ? "-" : "+";
+      for (let i = 0; i < this.ships[iterator].length; i++) {
+        if (this.board[x][eval(`${y}${condition}${i}`)] !== "placed") {
+          this.board[x][eval(`${y}${condition}${i}`)] = value;
         }
       }
     } else {
-      if (x + this.ships[iterator].length > 9) {
-        for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x - i][y] !== "placed") {
-            this.board[x - i][y] = value;
-          }
-        }
-      } else {
-        for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x + i][y] !== "placed") {
-            this.board[x + i][y] = value;
-          }
+      condition = x + this.ships[iterator].length > 9 ? "-" : "+";
+      for (let i = 0; i < this.ships[iterator].length; i++) {
+        if (this.board[eval(`${x}${condition}${i}`)][y] !== "placed") {
+          this.board[eval(`${x}${condition}${i}`)][y] = value;
         }
       }
     }
@@ -83,7 +71,7 @@ export default class Player {
     }
   }
 
-  placeShips() {
+  placeShips(invertBtn = this.invertBtn) {
     const handleMouseEnter = (e) => {
       let target = e.target;
       let [x, y] = this.findXandY(target);
@@ -101,6 +89,7 @@ export default class Player {
     const handleClick = (e) => {
       let target = e.target;
       let [x, y] = this.findXandY(target);
+
       this.boardLogic(x, y, "placed");
       this.renderBoard();
 
@@ -115,9 +104,9 @@ export default class Player {
       square.addEventListener("click", handleClick);
     });
 
-    this.invertBtn.addEventListener("click", () => {
+    invertBtn.addEventListener("click", () => {
       this.invert = this.invert === "horizontal" ? "vertical" : "horizontal";
-      this.invertBtn.textContent = `${this.invert}`;
+      invertBtn.textContent = `${this.invert}`;
     });
   }
 
