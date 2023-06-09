@@ -47,9 +47,10 @@ export default function renderDom() {
       } else {
         e.target.style.color = "black";
       }
-      console.log(player.hits, computer.hits);
+
       game.checkwin();
       game.computerMove();
+      game.checkwin();
       player.renderBoard(playerSquares);
       e.target.removeEventListener("click", handleClick);
     }
