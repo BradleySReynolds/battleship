@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&display=swap");
+    </style>
+  </head>
+  <body>
+    <img class="header-logo" src="../src/images/battleship.png" />
+    <p class="player-instruct">Place your Carrier</p>
+    <button class="invert">Horizontal</button>
+    <main class="main-container">
+      <div class="container player-container">
+        <h2 class="header player-header">Your Board</h2>
+        <div class="board player-board"></div>
+      </div>
+      <div class="container computer-container">
+        <h2 class="header computer-header">The Enemy's Board</h2>
+        <div class="board computer-board"></div>
+      </div>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>

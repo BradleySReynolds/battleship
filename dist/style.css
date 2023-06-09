@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Anton", sans-serif;
+  background-color: #202a44;
+  color: white;
+}
+
+.header-logo {
+  width: 50vw;
+  height: auto;
+}
+
+.player-instruct {
+  font-size: 32px;
+}
+
+.invert {
+  border: 1px solid white;
+  color: white;
+  background-color: transparent;
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+  padding: 8px;
+  margin: 1rem;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.computer-container,
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.computer-container {
+  display: none;
+}
+
+.container {
+  margin: 24px;
+}
+
+.header {
+  font-size: 32px;
+  letter-spacing: 3px;
+  margin-bottom: 1rem;
+}
+
+.computer-board,
+.player-board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.square,
+.player-square {
+  font-family: "Permanent Marker", cursive;
+  height: 50px;
+  width: 50px;
+  background-color: #ddd;
+  margin: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 32px;
+  color: #ddd;
+  user-select: none;
+}
+
+.square:hover,
+.player-square:hover {
+  transform: scale(1.1);
+  background-color: #bbb;
+  color: #bbb;
+
+  transition: all 0.1s ease-in-out;
+}
+
+.winner-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.winner-text {
+  font-size: 108px;
+}
+
+.winner-btn {
+  font-size: 36px;
+  background-color: white;
+  padding: 8px;
+  font-family: "Anton", sans-serif;
+  border: none;
+}
