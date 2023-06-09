@@ -23,13 +23,13 @@ export default class Player {
     if (invert === "horizontal") {
       if (y + this.ships[iterator].length > 9) {
         for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x][y - i] !== "w") {
+          if (this.board[x][y - i] !== "placed") {
             this.board[x][y - i] = value;
           }
         }
       } else {
         for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x][y + i] !== "w") {
+          if (this.board[x][y + i] !== "placed") {
             this.board[x][y + i] = value;
           }
         }
@@ -37,13 +37,13 @@ export default class Player {
     } else {
       if (x + this.ships[iterator].length > 9) {
         for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x - i][y] !== "w") {
+          if (this.board[x - i][y] !== "placed") {
             this.board[x - i][y] = value;
           }
         }
       } else {
         for (let i = 0; i < this.ships[iterator].length; i++) {
-          if (this.board[x + i][y] !== "w") {
+          if (this.board[x + i][y] !== "placed") {
             this.board[x + i][y] = value;
           }
         }
@@ -72,7 +72,7 @@ export default class Player {
         let x = Number(target.getAttribute("x"));
         let y = Number(target.getAttribute("y"));
 
-        this.boardLogic(invert, x, y, iterator, "z");
+        this.boardLogic(invert, x, y, iterator, "hovered");
 
         e.stopImmediatePropagation();
         this.renderBoard(playerSquares);
@@ -85,7 +85,7 @@ export default class Player {
         let x = Number(target.getAttribute("x"));
         let y = Number(target.getAttribute("y"));
 
-        this.boardLogic(invert, x, y, iterator, "p");
+        this.boardLogic(invert, x, y, iterator, "exit");
 
         e.stopImmediatePropagation();
         this.renderBoard(playerSquares);
@@ -98,7 +98,7 @@ export default class Player {
       let x = Number(target.getAttribute("x"));
       let y = Number(target.getAttribute("y"));
 
-      this.boardLogic(invert, x, y, iterator, "w");
+      this.boardLogic(invert, x, y, iterator, "placed");
       e.stopImmediatePropagation();
       this.renderBoard(playerSquares);
 
@@ -129,17 +129,20 @@ export default class Player {
   }
 
   renderBoard(playerBoard) {
+    const boardValueClassMap = {
+      hovered: "ship-hit",
+      placed: "ship-placed",
+      exit: "ship-empty",
+    };
+
     this.board.flat().forEach((ele, i) => {
-      if (ele === "z") {
-        playerBoard[i].style.backgroundColor = "#202a44";
-        playerBoard[i].style.color = "#202a44";
-      } else if (ele === "w") {
-        playerBoard[i].style.backgroundColor = "black";
-        playerBoard[i].style.color = "black";
-        playerBoard[i].textContent = "x";
-      } else if (ele === "p") {
-        playerBoard[i].style.backgroundColor = "#ddd";
-        playerBoard[i].style.color = "#ddd";
+      const element = playerBoard[i];
+      const className = boardValueClassMap[ele];
+      element.classList.remove("ship-placed", "ship-hit", "ship-empty");
+      element.classList.add(className);
+
+      if (ele === "placed") {
+        element.textContent = "x";
       }
     });
   }

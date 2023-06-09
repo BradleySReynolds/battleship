@@ -86,8 +86,7 @@ body {
   user-select: none;
 }
 
-.square:hover,
-.player-square:hover {
+.square:hover {
   transform: scale(1.1);
   background-color: #bbb;
   color: #bbb;
@@ -114,4 +113,20 @@ body {
   padding: 8px;
   font-family: "Anton", sans-serif;
   border: none;
+}
+
+/* Player Style Changes */
+.ship-hit {
+  background-color: #202a44;
+  color: #202a44;
+}
+
+.ship-placed {
+  background-color: black;
+  color: black;
+}
+
+.ship-empty {
+  background-color: #ddd;
+  color: #ddd;
 }
