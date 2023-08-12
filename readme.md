@@ -35,3 +35,23 @@ To run this project, you'll need:
    ```bash
    git clone https://github.com/your-username/battleship-game.git
    ```
+
+### Usage
+
+1. Open the game in your web browser after following the installation steps.
+2. Follow the provided instructions to place your ships on the gameboard.
+3. Click on the computer's board to attack and sink their ships.
+4. The game continues until either you or the computer sinks all the opponent's ships.
+
+### Code Structure
+
+- `createGameboard()`: Function to create the gameboard for players.
+- `Ship` class: Defines ships with names and lengths.
+- `ComputerPlayer` class: Manages computer player behavior and ship positioning.
+- `Player` class: Handles user interactions, ship placement, and hit tracking.
+- `Logic` class: Manages game logic and flow, including checking for wins.
+- `renderDom()`: Function to render the game interface in the DOM.
+
+### Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or create a pull request.
