@@ -33,7 +33,7 @@ To run this project, you'll need:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-username/battleship-game.git
+   git clone https://github.com/bradleysreynolds/battleship-game.git
    ```
 
 ### Usage
